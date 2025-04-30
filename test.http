@@ -1,0 +1,10 @@
+POST http://localhost:8080/candidate
+Content-Type: application/json
+
+{
+    "username" : "Maria",
+    "name" : "Maria de Sousa",
+    "email" : "maria@gmail.com",
+    "password" : "123",
+    "description" : "Desenvolvedora Java",
+},

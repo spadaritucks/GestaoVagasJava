@@ -1,0 +1,12 @@
+services:
+  postgres:
+    container_name: gestao_vagas_mysql
+    image: mysql:latest
+    ports:
+      - 3307:3306
+    environment:
+     - MYSQL_USER=admin
+     - MYSQL_PASSWORD=admin
+     - MYSQL_DATABASE=gestao_vagas
+     - MYSQL_ROOT_PASSWORD=admin
+

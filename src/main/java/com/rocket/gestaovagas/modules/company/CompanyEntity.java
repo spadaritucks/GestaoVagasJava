@@ -1,4 +1,4 @@
-package com.rocket.gestaovagas.modules.candidate;
+package com.rocket.gestaovagas.modules.company;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -15,25 +15,30 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import lombok.Data;
 
-@Data
-@Entity(name = "candidate")
-public class CandidateEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.UUID)
+
+
+@Entity(name = "company")
+@Data
+public class CompanyEntity {
+
+    @Id 
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
     @NotBlank()
     @Pattern(regexp = "^(?!\\s*$).+", message= "O campo [username] não deve conter espaço")
     private String username;
-    private String name;
     @Email(message = "O campo (email) deve conter um e-mail válido")
     private String email;
     @Length(min = 10, max = 100, message="A senha deve conter entre 10 a 100 caracteres")
     private String password;
+
+    private String website;
+
+    private String name;
+
     private String description;
-    private String curriculm;
 
     @CreationTimestamp
     private LocalDateTime created_at;
-
-
 }

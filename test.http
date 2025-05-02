@@ -5,6 +5,6 @@ Content-Type: application/json
     "username" : "Maria",
     "name" : "Maria de Sousa",
     "email" : "maria@gmail.com",
-    "password" : "123",
-    "description" : "Desenvolvedora Java",
+    "password" : "12345678910",
+    "description" : "Desenvolvedora Java"
 },

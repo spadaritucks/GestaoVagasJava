@@ -1,4 +1,4 @@
-package com.rocket.gestaovagas.modules.candidate.repository;
+package com.rocket.gestaovagas.modules.candidate.repositories;
 
 import java.util.Optional;
 import java.util.UUID;

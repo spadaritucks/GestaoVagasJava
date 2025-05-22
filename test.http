@@ -15,9 +15,20 @@ POST http://localhost:8080/company
 Content-Type: application/json
 
 {
-    "username" : "Maria",
-    "name" : "Maria de Sousa",
-    "email" : "maria@gmail.com",
+    "username" : "Felipe",
+    "name" : "Felipe de Sousa",
+    "email" : "felipe@gmail.com",
     "password" : "12345678910",
-    "description" : "Desenvolvedora Java"
+    "description" : "Desenvolvedor Java"
+},
+
+
+###
+
+POST http://localhost:8080/auth/company
+Content-Type: application/json
+
+{
+    "username" : "Felipe",
+    "password" : "12345678910"
 },

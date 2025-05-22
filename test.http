@@ -32,3 +32,17 @@ Content-Type: application/json
     "username" : "Felipe",
     "password" : "12345678910"
 },
+
+
+###
+
+POST http://localhost:8080/job
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJqYXZhZ2FzIiwiZXhwIjoxNzQ3OTI4MTQ1LCJzdWIiOiIzMzNiN2JhOS04YzE4LTQ3MmItOTc2NS05M2M5ZWQ1ZmJhNGIifQ.uCitllCCVP-GURuTeUZOG_izs1GaQaYImtrLcbHRBJ0
+
+{
+    "description": "Vaga para desenvolvedor Java Senior",
+    "benefits": "Vale alimentação, Vale transporte, Plano de saúde",
+    "level": "SENIOR",
+    "companyId": "123e4567-e89b-12d3-a456-426614174000"
+}

@@ -1,5 +1,7 @@
 package com.rocket.gestaovagas.modules.job.controllers;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rocket.gestaovagas.modules.job.JobEntity;
+import com.rocket.gestaovagas.modules.job.dto.CreateJobDTO;
 import com.rocket.gestaovagas.modules.job.services.JobService;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 
 @RestController
@@ -20,12 +24,15 @@ public class JobController {
     private JobService jobService;
 
     @PostMapping
-    public ResponseEntity<Object> create( @Valid @RequestBody JobEntity jobEntity){
-        try{
-            var result = this.jobService.execute(jobEntity);
-            return ResponseEntity.ok().body(result);
-        }catch(Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
+    public JobEntity create( @Valid @RequestBody CreateJobDTO createJobDTO, HttpServletRequest request){
+        var companyId = request.getAttribute("company_id");
+
+            var jobEntity = JobEntity.builder()
+            .benefits(createJobDTO.getBenefits())
+            .companyId(UUID.fromString(companyId.toString()))
+            .description(createJobDTO.getDescription())
+            .level(createJobDTO.getLevel())
+            .build();
+        return jobService.execute(jobEntity);
     }
 }

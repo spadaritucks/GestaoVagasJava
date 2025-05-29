@@ -14,13 +14,13 @@ import com.rocket.gestaovagas.modules.company.dto.AuthCompanyDTO;
 import com.rocket.gestaovagas.modules.company.services.AuthCompanyService;
 
 @RestController
-@RequestMapping("/auth")
+@RequestMapping("/company")
 public class AuthCompanyController {
 
     @Autowired
     private AuthCompanyService authCompanyService;
     
-    @PostMapping("/company")
+    @PostMapping("/auth")
     public ResponseEntity<Object> create(@RequestBody AuthCompanyDTO authCompanyDTO) throws AuthenticationException  {
         try{
             var token = this.authCompanyService.execute(authCompanyDTO);

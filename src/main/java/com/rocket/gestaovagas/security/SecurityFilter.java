@@ -20,7 +20,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class SecurityFilter extends OncePerRequestFilter {
 
     @Autowired
-    private JWTProvider jutProvider;
+    private JWTProvider jwtProvider;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
@@ -29,23 +29,25 @@ public class SecurityFilter extends OncePerRequestFilter {
         SecurityContextHolder.getContext().setAuthentication(null);
         String header = request.getHeader("Authorization");
 
-        if (header != null) {
-            var subjectToken = this.jutProvider.validadeToken(header);
-            if (subjectToken.isEmpty()) {
+        if (request.getRequestURI().startsWith("/company")) {
+            if (header != null) {
+              var subjectToken = this.jwtProvider.validadeToken(header);
+      
+              if (subjectToken.isEmpty()) {
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 return;
+              }
+      
+              request.setAttribute("company_id", subjectToken);
+              UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(subjectToken, null,
+                  Collections.emptyList());
+              SecurityContextHolder.getContext().setAuthentication(auth);
+      
             }
-            request.setAttribute("company_id", subjectToken);
-
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(subjectToken, null,
-
-                    Collections.emptyList());
-
-            SecurityContextHolder.getContext().setAuthentication(auth);
-        }
 
         filterChain.doFilter(request, response);
 
     }
+}
 
 }

@@ -12,8 +12,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 @Configuration
 public class SecurityConfig {
 
+    private final SecurityCandidateFilter securityCandidateFilter;
+
     @Autowired
     private SecurityFilter securityFilter;
+
+    SecurityConfig(SecurityCandidateFilter securityCandidateFilter) {
+        this.securityCandidateFilter = securityCandidateFilter;
+    }
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -24,13 +30,14 @@ public class SecurityConfig {
                             .requestMatchers("/auth/company").permitAll()
                             .requestMatchers("/candidate/auth").permitAll();
                     auth.anyRequest().authenticated();
-                }).addFilterBefore(securityFilter, BasicAuthenticationFilter.class);
+                }).addFilterBefore(securityFilter, BasicAuthenticationFilter.class)
+                .addFilterBefore(securityCandidateFilter, BasicAuthenticationFilter.class);
 
         return http.build();
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder () {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 

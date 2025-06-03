@@ -46,9 +46,10 @@ public class SecurityCandidateFilter extends OncePerRequestFilter {
 
       }
 
-      filterChain.doFilter(request, response);
+     
 
     }
+    filterChain.doFilter(request, response);
 
   }
 }

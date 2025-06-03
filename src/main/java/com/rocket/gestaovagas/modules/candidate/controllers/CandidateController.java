@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rocket.gestaovagas.modules.candidate.CandidateEntity;
+import com.rocket.gestaovagas.modules.candidate.dto.ProfileCandidateResponseDTO;
 import com.rocket.gestaovagas.modules.candidate.services.CandidateService;
 import com.rocket.gestaovagas.modules.candidate.services.ListAllJobsByFilterService;
 import com.rocket.gestaovagas.modules.candidate.services.ProfileCandidadeService;
@@ -55,6 +56,15 @@ public class CandidateController {
 
     @GetMapping("/")
     @PreAuthorize("hasRole('CANDIDATE')")
+    @Tag(name = "Candidato", description = "Informações do candidato")
+    @Operation(summary = "Perfil do candidato", description = "Essa função é responsável por buscar as informações do perfil do candidato")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(schema = @Schema(implementation = ProfileCandidateResponseDTO.class))
+            }),
+            @ApiResponse(responseCode = "400", description = "User not found")
+    })
+    @SecurityRequirement(name = "jwt_auth")
     public ResponseEntity<Object> get(HttpServletRequest request) {
         var idCandidate = request.getAttribute("candidate_id");
         try {
@@ -70,18 +80,18 @@ public class CandidateController {
         }
 
     }
-   
+
     @GetMapping("/job")
     @PreAuthorize("hasRole('CANDIDATE')")
     @SecurityRequirement(name = "jwt_auth")
     @Tag(name = "Candidato", description = "Informações do candidato")
     @Operation(summary = "Listagem de vagas disponível para o candidato", description = "Essa função é responsável por listar todas as vagas disponíveis, baseada no filtro")
     @ApiResponses({
-        @ApiResponse(responseCode = "200", content = {
-            @Content(array = @ArraySchema(schema = @Schema(implementation = JobEntity.class)))
-        })  
+            @ApiResponse(responseCode = "200", content = {
+                    @Content(array = @ArraySchema(schema = @Schema(implementation = JobEntity.class)))
+            })
     })
     public List<JobEntity> findJobByFilter(@RequestParam String filter) {
         return this.listAllJobsByFilterService.execute(filter);
-      }
+    }
 }
